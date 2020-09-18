@@ -1,0 +1,63 @@
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var isSymmetric = function(root) {
+    if (!root) return true;
+    const stack = [root.left, root.right];
+
+    while (stack.length) {
+        const l = stack.pop()
+        const r = stack.pop()
+        if (!l && !r) continue
+        if (!l || !r) return false
+        if (l.val !== r.val) return false
+        stack.push(l.left, r.right)
+        stack.push(l.right, r.left)
+    }
+
+    return true
+};
+
+function TreeNode(val, left, right) {
+    this.val = (val===undefined ? 0 : val)
+    this.left = (left===undefined ? null : left)
+    this.right = (right===undefined ? null : right)
+}
+
+const test = true
+
+if (typeof test === 'boolean' && test) {
+    const { expect } = require('../utils.js');
+    expect(isSymmetric(new TreeNode(2, new TreeNode(1), new TreeNode(3)))/*?*/, false) //?. $
+    expect(isSymmetric(new TreeNode(1, null, new TreeNode(2, new TreeNode(3))))/*?*/, false) //?. $
+    expect(isSymmetric(new TreeNode(1, null, new TreeNode(3, new TreeNode(2))))/*?*/, false) //?. $
+    expect(isSymmetric(new TreeNode(
+        'F',
+        new TreeNode('B', new TreeNode('A'), new TreeNode('D', new TreeNode('C'), new TreeNode('E'))),
+        new TreeNode('G', null, new TreeNode('I', new TreeNode('H'))),
+    ))/*?*/, false) //?. $
+    expect(isSymmetric(new TreeNode(
+        '1',
+        new TreeNode('2', new TreeNode('3'), new TreeNode('4')),
+        new TreeNode('2', new TreeNode('4'), new TreeNode('3')),
+    ))/*?*/, true) //?. $
+    expect(isSymmetric(new TreeNode(
+        '1',
+        new TreeNode('2', new TreeNode('3'), null),
+        new TreeNode('2', null, new TreeNode('3')),
+    ))/*?*/, true) //?. $
+    expect(isSymmetric(new TreeNode(
+        '1',
+        new TreeNode('2', null,  new TreeNode('3')),
+        new TreeNode('2', null, new TreeNode('3')),
+    ))/*?*/, false) //?. $
+}
